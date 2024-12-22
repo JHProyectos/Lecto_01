@@ -1,0 +1,42 @@
+{
+   "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "login_button": "Login",
+    "google_login": "Sign in with Google",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome, {name}!",
+    "what_to_do": "What would you like to do today?",
+    "upload_pdf": "Upload PDF",
+    "text_to_speech": "Text to Speech",
+    "my_audio_files": "My Audio Files",
+    "language": "Language",
+    "logout": "Logout"
+  }
+  "upload": {
+    "title": "Upload PDF",
+    "drag_file_here": "Drag a PDF file here",
+    "select_pdf": "Select PDF",
+    "upload_pdf": "Upload PDF",
+    "success_title": "Success",
+    "success_message": "The PDF file has been uploaded successfully."
+  },
+  "processing": {
+    "title": "Processing PDF",
+    "processing_file": "Processing: {0}",
+    "progress_percentage": "{0}%",
+    "go_to_playback": "Go to playback"
+  },
+  "playback": {
+    "title": "Audio Playback",
+    "file": "File: {0}",
+    "progress_percentage": "{0}%"
+  },
+  "common": {
+    "ok": "OK"
+  }
+}

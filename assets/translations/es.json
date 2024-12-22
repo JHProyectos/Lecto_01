@@ -1,0 +1,44 @@
+{
+  "login": {
+    "title": "Iniciar Sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login_button": "Iniciar Sesión",
+    "google_login": "Iniciar Sesión con Google",
+    "language": "Idioma"
+  },
+  "home": {
+    "title": "Inicio",
+    "welcome": "¡Bienvenido, {name}!",
+    "what_to_do": "¿Qué te gustaría hacer hoy?",
+    "upload_pdf": "Subir PDF",
+    "text_to_speech": "Texto a Voz",
+    "my_audio_files": "Mis Archivos de Audio",
+    "language": "Idioma",
+    "logout": "Cerrar Sesión"
+  }
+  {
+  "upload": {
+    "title": "Subir PDF",
+    "drag_file_here": "Arrastra un archivo PDF aquí",
+    "select_pdf": "Seleccionar PDF",
+    "upload_pdf": "Subir PDF",
+    "success_title": "Éxito",
+    "success_message": "El archivo PDF se ha cargado correctamente."
+  },
+  "processing": {
+    "title": "Procesando PDF",
+    "processing_file": "Procesando: {0}",
+    "progress_percentage": "{0}%",
+    "go_to_playback": "Ir a reproducción"
+  },
+  "playback": {
+    "title": "Reproducción de Audio",
+    "file": "Archivo: {0}",
+    "progress_percentage": "{0}%"
+  },
+  "common": {
+    "ok": "OK"
+  }
+}
+}
