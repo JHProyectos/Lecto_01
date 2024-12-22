@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-/// Enumeración de todas las rutas disponibles en la aplicación
+/// Enumeración de todas las rutas de navegación disponibles en la aplicación
 enum AppRoute {
   login,
   home,
   pdfUpload,
   processing,
   playback,
-  settings
+  settings,
 }
 
-/// Extensión para convertir enum a String
+/// Extensión para convertir enum a String para las rutas de navegación
 extension AppRouteExtension on AppRoute {
   String get path {
     switch (this) {
@@ -26,12 +26,44 @@ extension AppRouteExtension on AppRoute {
         return '/playback';
       case AppRoute.settings:
         return '/settings';
+      default:
+        return '/'; // Ruta por defecto
     }
   }
 
   String get name {
     return toString().split('.').last;
   }
+}
+
+/// Clase para manejar las rutas de recursos estáticos
+class StaticResources {
+  // Ruta centralizada para las traducciones
+  static const String translationPath = 'assets/translations'; 
+  
+  // Ruta para las imágenes
+  static const String imagesPath = 'assets/images'; 
+
+  // Ruta para las fuentes personalizadas
+  static const String fontsPath = 'assets/fonts';
+
+  // Ruta para archivos de datos JSON (configuraciones o datos estáticos)
+  static const String dataPath = 'assets/data'; 
+
+  // Ruta para archivos de audio
+  static const String audioPath = 'assets/audio'; 
+
+  // Ruta para archivos de video
+  static const String videoPath = 'assets/videos';
+
+  // Ruta para los íconos personalizados
+  static const String iconsPath = 'assets/icons'; 
+
+  // Ruta para las animaciones Lottie
+  static const String lottiePath = 'assets/lottie'; 
+
+  // Ruta para bases de datos locales, si aplicas algún tipo de almacenamiento local como SQLite
+  static const String databasePath = 'assets/database'; 
 }
 
 /// Clase para manejar la navegación de la aplicación
