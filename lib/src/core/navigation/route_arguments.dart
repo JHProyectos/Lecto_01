@@ -26,3 +26,21 @@ class PlaybackScreenArguments extends RouteArguments {
     required this.originalFileName,
   });
 }
+/*
+/// Argumentos tipados para las rutas
+abstract class RouteArguments {}
+
+class ProcessingArguments extends RouteArguments {
+  final String fileName;
+  final int fileSize;
+
+  ProcessingArguments({required this.fileName, required this.fileSize});
+}
+
+class PlaybackArguments extends RouteArguments {
+  final String audioFile;
+  final Duration duration;
+
+  PlaybackArguments({required this.audioFile, required this.duration});
+}
+*/
