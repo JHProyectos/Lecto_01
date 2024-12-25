@@ -1,12 +1,15 @@
 //lib/source/features/auth/login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'authentication_manager.dart';
-import 'error_handler.dart';
-import 'form_validation_service.dart';
-import 'login_screen_layout.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../core/auth/authentication_manager.dart';
+import '../../core/error/error_handler.dart';
+import '../../core/validation/form_validation_service.dart';
+import '../../shared/layouts/login_screen_layout.dart';
 import '../../shared/widgets/language_selector.dart';
+import '../../core/navigation/app_navigator.dart';
+import '../../core/navigation/app_route.dart';
+import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -28,7 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.text,
         true, // Assuming UTN student flag
       );
-      Navigator.of(context).pushReplacementNamed('/home');
+      AppNavigator.pushReplacementRoute(
+        page: const HomeScreen(),
+        settings: RouteSettings(name: AppRoute.home.path),
+      );
     } catch (e) {
       setState(() => _errorMessage = ErrorHandler.getAuthErrorMessage(e));
     } finally {
@@ -40,7 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
     try {
       await _authManager.signInWithGoogle(true);
-      Navigator.of(context).pushReplacementNamed('/home');
+      AppNavigator.pushReplacementRoute(
+        page: const HomeScreen(),
+        settings: RouteSettings(name: AppRoute.home.path),
+      );
     } catch (e) {
       setState(() => _errorMessage = ErrorHandler.getAuthErrorMessage(e));
     } finally {
@@ -48,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
   
- @override
+  @override
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
