@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             localizationsDelegates: context.localizationDelegates,
             home: const SettingsPage(),
+            navigatorObservers: [AppNavigatorObserver()],
           );
         },
       ),
