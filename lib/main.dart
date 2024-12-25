@@ -16,9 +16,13 @@ void main() async {
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('es')],
-      path: StaticResources.translationPath, // Using the path defined in routes.dart
+      path: StaticResources.translationPath,
       fallbackLocale: const Locale('en'),
-      child: const MyApp(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ],
+        child: const MyApp(),      
     ),
   );
 }
@@ -36,9 +40,9 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: themeProvider.lightTheme, // Light theme
-            darkTheme: themeProvider.darkTheme, // Dark theme
-            themeMode: themeProvider.themeMode, // Current theme mode
+            theme: ThemeConfig.lightTheme,        // Light theme
+            darkTheme: ThemeConfig.darkTheme,     // Dark theme
+            themeMode: themeProvider.themeMode,   // Current theme mode
             locale: context.locale,
             supportedLocales: context.supportedLocales,
             localizationsDelegates: context.localizationDelegates,
