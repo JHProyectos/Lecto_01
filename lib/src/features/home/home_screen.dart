@@ -1,11 +1,18 @@
+//lib/src/features/home/home_screen.dart:
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../shared/layouts/orientation_layout.dart';
 import '../../shared/styles/orientation_styles.dart';
 import '../../core/auth/authentication_manager.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/app_logo.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../../shared/widgets/language_selector.dart';
+import '../../core/navigation/app_navigator.dart';
+import '../../core/navigation/app_route.dart';
+import '../pdf_upload/upload_screen.dart';
+import '../text_to_speech/text_to_speech_screen.dart';
+import '../audio_playback/audio_playback_screen.dart';
+import '../login/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,7 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
   // Maneja el proceso de cierre de sesión
   Future<void> _handleLogout() async {
     await _authManager.signOut();
-    Navigator.of(context).pushReplacementNamed('/login');
+    AppNavigator.pushReplacementRoute(
+      page: LoginScreen(),
+      settings: RouteSettings(name: AppRoute.login.path),
+    );
   }
 
   @override
@@ -108,21 +118,30 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         CustomButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/pdf_upload');
+            AppNavigator.pushSlideRoute(
+              page: const UploadScreen(),
+              settings: RouteSettings(name: AppRoute.pdfUpload.path),
+            );
           },
           child: Text('home.upload_pdf'.tr()),
         ),
         SizedBox(height: spacing),
         CustomButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/text_to_speech');
+            AppNavigator.pushSlideRoute(
+              page: const TextToSpeechScreen(),
+              settings: RouteSettings(name: AppRoute.textToSpeech.path),
+            );
           },
           child: Text('home.text_to_speech'.tr()),
         ),
         SizedBox(height: spacing),
         CustomButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/audio_playback');
+            AppNavigator.pushSlideRoute(
+              page: const AudioPlaybackScreen(),
+              settings: RouteSettings(name: AppRoute.playback.path),
+            );
           },
           child: Text('home.my_audio_files'.tr()),
         ),
