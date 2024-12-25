@@ -64,6 +64,15 @@ class StaticResources {
 
   // Ruta para bases de datos locales, si aplicas algún tipo de almacenamiento local como SQLite
   static const String databasePath = 'assets/database'; 
+
+  /// Construye la ruta completa para una imagen
+  static String image(String name) => '$imagesPath/$name';
+  
+  /// Construye la ruta completa para un archivo de traducción
+  static String translation(String locale) => '$translationPath/$locale.json';
+  
+  /// Construye la ruta completa para un archivo de audio
+  static String audio(String name) => '$audioPath/$name';
 }
 
 /// Clase para manejar la navegación de la aplicación
