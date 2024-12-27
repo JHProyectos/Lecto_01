@@ -6,6 +6,7 @@ import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/app_logo.dart';
 import '../../shared/utils/file_validator.dart';
 import '../../shared/widgets/language_selector.dart';
+import '../../core/theme/theme_config.dart';
 
 /// Pantalla para subir archivos PDF
 class UploadScreen extends StatefulWidget {
