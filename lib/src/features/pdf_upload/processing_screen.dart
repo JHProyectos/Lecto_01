@@ -3,6 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../shared/utils/pdf_processor.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/language_selector.dart';
+import '../../core/theme/theme_config.dart';
+import '../../core/navigation/app_navigator.dart';
+import '../../core/navigation/app_route.dart';
 
 /// Pantalla que muestra el progreso del procesamiento de PDF a audio
 class ProcessingScreen extends StatefulWidget {
@@ -42,7 +45,10 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
 
   /// Navega a la pantalla de reproducción
   void _navigateToPlayback() {
-    Navigator.pushReplacementNamed(context, '/playback', arguments: widget.fileName);
+    AppNavigator.pushReplacementRoute(
+      page: PlaybackScreen(fileName: widget.fileName),
+      settings: RouteSettings(name: AppRoute.playback.path),
+    );
   }
 
   @override
@@ -50,8 +56,9 @@ class _ProcessingScreenState extends State<ProcessingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('processing.title'.tr()),
-        actions: const [
-          LanguageSelector(),
+        actions: [
+          const LanguageSelector(),
+          ThemeConfig.buildThemeToggleButton(context),
         ],
       ),
       body: Center(
