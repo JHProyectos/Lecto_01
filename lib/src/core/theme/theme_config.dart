@@ -53,4 +53,13 @@ class ThemeConfig {
       labelStyle: TextStyle(color: Colors.blueGrey[200]),
     ),
   );
+  // Method for the theme toggle button
+  static Widget buildThemeToggleButton(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    return IconButton(
+      icon: Icon(themeProvider.isDarkTheme ? Icons.light_mode : Icons.dark_mode),
+      onPressed: () => themeProvider.toggleTheme(),
+      tooltip: 'Toggle theme',
+    );
+  }
 }
