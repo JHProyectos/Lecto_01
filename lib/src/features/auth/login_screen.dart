@@ -65,12 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('login.title'.tr()),
-        actions: [
+        actions: [[
           const LanguageSelector(),
-          IconButton(
-            icon: Icon(themeProvider.isDarkTheme ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => themeProvider.toggleTheme(),
-          ),
+          ThemeConfig.buildThemeToggleButton(context), // Use the centralized theme toggle button
         ],
       ),
       body: Stack(
