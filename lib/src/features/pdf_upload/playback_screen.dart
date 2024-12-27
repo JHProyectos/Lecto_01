@@ -4,6 +4,7 @@ import 'dart:async';
 import '../../shared/utils/audio_player.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/language_selector.dart';
+import '../../core/theme/theme_config.dart';
 
 /// Pantalla para la reproducción de audio generado a partir de PDF
 class PlaybackScreen extends StatefulWidget {
@@ -56,8 +57,9 @@ class _PlaybackScreenState extends State<PlaybackScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('playback.title'.tr()),
-        actions: const [
-          LanguageSelector(),
+        actions: [
+          const LanguageSelector(),
+          ThemeConfig.buildThemeToggleButton(context),
         ],
       ),
       body: Padding(
