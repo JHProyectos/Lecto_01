@@ -130,6 +130,7 @@ class _UploadScreenState extends State<UploadScreen> {
         title: Text('upload.title'.tr()),
         actions: const [
           LanguageSelector(),
+          ThemeConfig.buildThemeToggleButton(context), //Boton de cambio de tema
         ],
       ),
       body: Center(
