@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('home.title'.tr()),
         actions: [
           const LanguageSelector(), // Selector de idioma
+          ThemeConfig.buildThemeToggleButton(context), //boton de cambio de tema
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: _handleLogout,
