@@ -13,6 +13,7 @@ import '../pdf_upload/upload_screen.dart';
 import '../text_to_speech/text_to_speech_screen.dart';
 import '../audio_playback/audio_playback_screen.dart';
 import '../login/login_screen.dart';
+import '../../core/theme/theme_config.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
