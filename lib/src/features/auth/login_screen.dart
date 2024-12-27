@@ -10,6 +10,7 @@ import '../../core/navigation/app_route.dart';
 import '../../shared/layouts/login_screen_layout.dart';
 import '../../shared/widgets/language_selector.dart';
 import '../home/home_screen.dart';
+import '../../core/theme/theme_config.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
