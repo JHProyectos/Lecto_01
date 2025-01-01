@@ -1,12 +1,29 @@
+// Widgets y funcionalidades básicas de Flutter
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'dart:io';
+
+// Localización
 import 'package:easy_localization/easy_localization.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/app_logo.dart';
-import '../../shared/utils/file_validator.dart';
-import '../../shared/widgets/language_selector.dart';
+
+// Navegación y rutas
+import '../../core/navigation/app_navigator.dart';
+import '../../core/navigation/app_route.dart';
+import '../../core/navigation/page_transition.dart';
+
+// Manejo de errores
+import '../../core/error/error_handler.dart';
+
+// Gestión de temas
+import '../../core/providers/theme_provider.dart';
 import '../../core/theme/theme_config.dart';
+
+// Utilidades y widgets personalizados
+import '../../shared/utils/file_uploader.dart';
+import '../../shared/widgets/custom_button.dart';
+import '../../shared/widgets/language_selector.dart';
+
+// Otras pantallas (para navegación)
+import '../processing/processing_screen.dart';
 
 /// Pantalla para subir archivos PDF
 /// Estado de la pantalla de carga (Upload).
