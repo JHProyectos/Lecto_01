@@ -8,90 +8,71 @@ import '../../core/navigation/app_navigator.dart';
 import '../../core/navigation/app_route.dart';
 
 /// Pantalla que muestra el progreso del procesamiento de PDF a audio
-class ProcessingScreen extends StatefulWidget {
-  final String fileName;
-
-  const ProcessingScreen({Key? key, required this.fileName}) : super(key: key);
-
-  @override
-  _ProcessingScreenState createState() => _ProcessingScreenState();
-}
-
+/// Estado de la pantalla de procesamiento (Processing).
 class _ProcessingScreenState extends State<ProcessingScreen> {
-  double _progress = 0.0;
+  /// Indica si el archivo está siendo procesado.
   bool _isProcessing = true;
+
+  /// Progreso actual del procesamiento, expresado como un valor entre 0.0 y 1.0.
+  double _progress = 0.0;
+
+  /// Navega a la pantalla de reproducción (Playback) cuando el procesamiento finaliza.
+  void _navigateToPlayback() {
+    AppNavigator.pushReplacementNamed(
+      context,
+      AppRoute.playback,
+      arguments: PlaybackScreenArguments(fileName: widget.fileName), // Argumentos necesarios para la reproducción.
+      transition: PageTransition.fade, // Transición de desvanecimiento.
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _startProcessing();
+    _startProcessing(); // Inicia el procesamiento del archivo al cargar la pantalla.
   }
 
-  /// Inicia el procesamiento del PDF
-  void _startProcessing() {
-    PdfProcessor.processPdf(widget.fileName).listen(
-      (progress) {
-        setState(() {
-          _progress = progress;
-        });
-      },
-      onDone: () {
-        setState(() {
-          _isProcessing = false;
-        });
-      },
-    );
-  }
-
-  /// Navega a la pantalla de reproducción
-  void _navigateToPlayback() {
-    AppNavigator.pushReplacementRoute(
-      page: PlaybackScreen(fileName: widget.fileName),
-      settings: RouteSettings(name: AppRoute.playback.path),
-    );
+  /// Inicia la lógica de procesamiento del archivo.
+  ///
+  /// Se actualiza el progreso en tiempo real y, al finalizar,
+  /// navega automáticamente a la pantalla de reproducción.
+  void _startProcessing() async {
+    try {
+      // Simula la operación de procesamiento mediante un flujo (stream).
+      await for (final progress in processFile(widget.fileName)) {
+        setState(() => _progress = progress); // Actualiza el progreso en la interfaz.
+      }
+      _navigateToPlayback(); // Navega a la pantalla de reproducción al terminar.
+    } catch (e) {
+      // Maneja errores durante el procesamiento (opcional: mostrar un mensaje de error).
+    } finally {
+      setState(() => _isProcessing = false); // Marca el fin del estado de procesamiento.
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('processing.title'.tr()),
-        actions: [
-          const LanguageSelector(),
-          ThemeConfig.buildThemeToggleButton(context),
-        ],
+        title: Text('processing.title'.tr()), // Título traducido dinámicamente.
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Muestra el nombre del archivo que se está procesando
-              Text(
-                'processing.processing_file'.tr(args: [widget.fileName]),
-                style: Theme.of(context).textTheme.headline6,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32.0),
-              // Barra de progreso
-              LinearProgressIndicator(value: _progress),
-              const SizedBox(height: 16.0),
-              // Porcentaje de progreso
-              Text(
-                'processing.progress_percentage'.tr(args: [(_progress * 100).toStringAsFixed(0)]),
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              const SizedBox(height: 32.0),
-              // Botón para ir a la pantalla de reproducción
-              if (!_isProcessing)
-                CustomButton(
-                  onPressed: _navigateToPlayback,
-                  child: Text('processing.go_to_playback'.tr()),
-                ),
-            ],
-          ),
-        ),
+        // Muestra un indicador de progreso mientras el archivo está en proceso.
+        child: _isProcessing
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Indicador de progreso circular con el valor actual.
+                CircularProgressIndicator(value: _progress),
+                // Texto que muestra el porcentaje completado.
+                Text('${(_progress * 100).toStringAsFixed(0)}%'),
+              ],
+            )
+          : ElevatedButton(
+              // Botón para navegar a la pantalla de reproducción una vez terminado.
+              onPressed: _navigateToPlayback,
+              child: Text('processing.view_result'.tr()), // Texto traducido.
+            ),
       ),
     );
   }
