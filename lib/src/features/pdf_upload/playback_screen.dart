@@ -1,10 +1,23 @@
+// Widgets y funcionalidades básicas de Flutter
 import 'package:flutter/material.dart';
+
+// Localización
 import 'package:easy_localization/easy_localization.dart';
-import 'dart:async';
-import '../../shared/utils/audio_player.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/language_selector.dart';
+
+// Navegación y rutas
+import '../../core/navigation/app_navigator.dart';
+import '../../core/navigation/app_route.dart';
+
+// Gestión de temas
+import '../../core/providers/theme_provider.dart';
 import '../../core/theme/theme_config.dart';
+
+// Widgets personalizados
+import '../../shared/widgets/audio_player.dart';
+import '../../shared/widgets/language_selector.dart';
+
+// Modelos y argumentos
+import '../../shared/models/playback_screen_arguments.dart';
 
 /// Pantalla para la reproducción de audio generado a partir de PDF
 /// Estado de la pantalla de reproducción (Playback).
