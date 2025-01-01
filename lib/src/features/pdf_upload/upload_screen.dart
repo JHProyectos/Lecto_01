@@ -9,196 +9,64 @@ import '../../shared/widgets/language_selector.dart';
 import '../../core/theme/theme_config.dart';
 
 /// Pantalla para subir archivos PDF
-class UploadScreen extends StatefulWidget {
-  const UploadScreen({Key? key}) : super(key: key);
-
-  @override
-  _UploadScreenState createState() => _UploadScreenState();
-}
-
+/// Estado de la pantalla de carga (Upload).
 class _UploadScreenState extends State<UploadScreen> {
-  // Controlador para la zona de arrastre de archivos
-  late DropzoneViewController _dropzoneController;
-  
-  // Nombre del archivo seleccionado
-  String? _selectedFileName;
-  
-  // Indica si se está cargando un archivo
+  /// Indica si se está realizando una operación de carga.
   bool _isUploading = false;
-  
-  // Mensaje de error, si lo hay
+
+  /// Mensaje de error, en caso de que ocurra un problema durante la carga.
   String? _errorMessage;
 
-  /// Inicializa el controlador de la zona de arrastre
-  void _onDropzoneLoaded(DropzoneViewController controller) {
-    _dropzoneController = controller;
-  }
-
-  /// Maneja el evento de soltar un archivo en la zona de arrastre
-  Future<void> _onFileDropped(dynamic event) async {
-    final name = event.name;
-    final mime = await _dropzoneController.getFileMIME(event);
-    final size = await _dropzoneController.getFileSize(event);
-    
-    // Valida el archivo usando FileValidator
-    final errorMessage = FileValidator.validatePdfFile(name, mime, size);
-
-    setState(() {
-      if (errorMessage == null) {
-        _selectedFileName = name;
-        _errorMessage = null;
-      } else {
-        _errorMessage = errorMessage;
-        _selectedFileName = null;
-      }
-    });
-  }
-
-  /// Abre el selector de archivos y maneja la selección
-  Future<void> _selectFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-      allowMultiple: false,
+  /// Navega a la pantalla de procesamiento después de cargar un archivo.
+  ///
+  /// [fileName]: Nombre del archivo cargado.
+  void _navigateToProcessing(String fileName) {
+    AppNavigator.pushNamed(
+      context,
+      AppRoute.processing,
+      arguments: ProcessingScreenArguments(fileName: fileName), // Argumentos de procesamiento.
+      transition: PageTransition.slide, // Transición de desplazamiento.
     );
+  }
 
-    if (result != null) {
-      final file = result.files.first;
-      // Valida el archivo seleccionado
-      final errorMessage = FileValidator.validatePdfFile(
-        file.name, 
-        file.extension ?? '', 
-        file.size
-      );
-
-      setState(() {
-        if (errorMessage == null) {
-          _selectedFileName = file.name;
-          _errorMessage = null;
-        } else {
-          _errorMessage = errorMessage;
-          _selectedFileName = null;
-        }
-      });
+  /// Maneja la lógica para cargar un archivo.
+  ///
+  /// [file]: Archivo que se desea cargar.
+  /// Una vez cargado, redirige a la pantalla de procesamiento.
+  void _handleUpload(File file) async {
+    setState(() => _isUploading = true); // Indica que el estado es "subiendo".
+    try {
+      final fileName = await uploadFile(file); // Simula la operación de carga del archivo.
+      _navigateToProcessing(fileName); // Navega a la pantalla de procesamiento.
+    } catch (e) {
+      // Captura errores y los asigna al mensaje de error.
+      setState(() => _errorMessage = ErrorHandler.getUploadErrorMessage(e));
+    } finally {
+      setState(() => _isUploading = false); // Finaliza el estado de "subiendo".
     }
-  }
-
-  /// Simula la carga del archivo seleccionado
-  Future<void> _uploadFile() async {
-    if (_selectedFileName == null) return;
-
-    setState(() {
-      _isUploading = true;
-    });
-
-    // Aquí iría la lógica real de carga del archivo
-    // Por ahora, solo simulamos una espera de 2 segundos
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isUploading = false;
-      _selectedFileName = null;
-    });
-
-    _showUploadSuccessDialog();
-  }
-
-  /// Muestra un diálogo de éxito después de la carga
-  void _showUploadSuccessDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('upload.success_title'.tr()),
-          content: Text('upload.success_message'.tr()),
-          actions: <Widget>[
-            TextButton(
-              child: Text('common.ok'.tr()),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('upload.title'.tr()),
-        actions: const [
-          LanguageSelector(),
-          ThemeConfig.buildThemeToggleButton(context), //Boton de cambio de tema
-        ],
-      ),
+      appBar: AppBar(title: Text('upload.title'.tr())), // Título traducido.
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Logo de la aplicación
-              const AppLogo(size: 100.0),
-              const SizedBox(height: 32.0),
-
-              // Zona de arrastre para soltar archivos
-              DropzoneView(
-                onCreated: _onDropzoneLoaded,
-                onDrop: _onFileDropped,
-                operation: DragOperation.copy,
-                cursor: CursorType.grab,
-                child: Container(
-                  height: 150.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      _selectedFileName ?? 'upload.drag_file_here'.tr(),
-                      style: Theme.of(context).textTheme.subtitle1,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+        // Muestra un indicador de carga o el contenido principal.
+        child: _isUploading
+          ? CircularProgressIndicator() // Indicador de carga mientras se realiza la operación.
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Botón para cargar un archivo.
+                ElevatedButton(
+                  onPressed: () => _handleUpload(File('path/to/file')), // Simula la selección de un archivo.
+                  child: Text('upload.select_file'.tr()), // Texto traducido.
                 ),
-              ),
-              
-              // Muestra el mensaje de error si existe
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _errorMessage!,
-                    style: TextStyle(color: Colors.red),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              const SizedBox(height: 16.0),
-
-              // Botón para seleccionar archivo manualmente
-              CustomButton(
-                onPressed: _selectFile,
-                child: Text('upload.select_pdf'.tr()),
-              ),
-              const SizedBox(height: 16.0),
-
-              // Botón para subir el archivo seleccionado
-              CustomButton(
-                onPressed: _selectedFileName != null && !_isUploading
-                    ? _uploadFile
-                    : null,
-                child: _isUploading
-                    ? const CircularProgressIndicator()
-                    : Text('upload.upload_pdf'.tr()),
-              ),
-            ],
-          ),
-        ),
+                // Muestra un mensaje de error si ocurre un problema durante la carga.
+                if (_errorMessage != null)
+                  Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+              ],
+            ),
       ),
     );
   }
