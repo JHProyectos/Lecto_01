@@ -15,39 +15,41 @@ import '../audio_playback/audio_playback_screen.dart';
 import '../login/login_screen.dart';
 import '../../core/theme/theme_config.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
+/// Estado de la pantalla principal (Home).
 class _HomeScreenState extends State<HomeScreen> {
+  /// Gestor de autenticación para manejar el cierre de sesión.
   final AuthenticationManager _authManager = AuthenticationManager();
-  String _userName = '';
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
+  /// Navega a la pantalla de carga de archivos.
+  void _navigateToUpload() {
+    AppNavigator.pushNamed(
+      context,
+      AppRoute.upload,
+      transition: PageTransition.slide, // Transición de desplazamiento.
+    );
   }
 
-  // Carga los datos del usuario actual
-  Future<void> _loadUserData() async {
-    final user = await _authManager.getCurrentUser();
-    if (user != null) {
-      setState(() {
-        _userName = user.displayName ?? 'user.default_name'.tr();
-      });
-    }
+  /// Navega a la pantalla de reproducción de un archivo.
+  ///
+  /// [fileName]: Nombre del archivo a reproducir.
+  void _navigateToPlayback(String fileName) {
+    AppNavigator.pushNamed(
+      context,
+      AppRoute.playback,
+      arguments: PlaybackScreenArguments(fileName: fileName), // Argumentos para la reproducción.
+      transition: PageTransition.fade, // Transición de desvanecimiento.
+    );
   }
 
-  // Maneja el proceso de cierre de sesión
-  Future<void> _handleLogout() async {
-    await _authManager.signOut();
-    AppNavigator.pushReplacementRoute(
-      page: LoginScreen(),
-      settings: RouteSettings(name: AppRoute.login.path),
+  /// Maneja el cierre de sesión del usuario.
+  ///
+  /// Al cerrar sesión, redirige al usuario a la pantalla de inicio de sesión.
+  void _handleLogout() async {
+    await _authManager.signOut(); // Cierra la sesión actual.
+    AppNavigator.pushReplacementNamed(
+      context,
+      AppRoute.login,
+      transition: PageTransition.fade, // Transición de desvanecimiento.
     );
   }
 
@@ -55,99 +57,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('home.title'.tr()),
+        title: Text('home.title'.tr()), // Título traducido.
         actions: [
-          const LanguageSelector(), // Selector de idioma
-          ThemeConfig.buildThemeToggleButton(context), //boton de cambio de tema
+          // Botón para cerrar sesión.
           IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _handleLogout,
-            tooltip: 'home.logout'.tr(),
+            icon: Icon(Icons.logout),
+            onPressed: _handleLogout, // Llama a la función de cierre de sesión.
           ),
         ],
       ),
-      body: OrientationLayout(
-        portraitLayout: (context) => _buildLayout(context, isPortrait: true),
-        landscapeLayout: (context) => _buildLayout(context, isPortrait: false),
-      ),
-    );
-  }
-
-  // Construye el diseño principal basado en la orientación
-  Widget _buildLayout(BuildContext context, {required bool isPortrait}) {
-    final padding = isPortrait
-        ? OrientationStyles.portraitPadding
-        : OrientationStyles.landscapePadding;
-    final spacing = isPortrait
-        ? OrientationStyles.portraitSpacing
-        : OrientationStyles.landscapeSpacing;
-
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(padding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Column(
         children: [
-          _buildWelcomeSection(spacing),
-          SizedBox(height: spacing),
-          _buildFeatureButtons(spacing),
+          // Botón para navegar a la pantalla de carga de archivos.
+          ElevatedButton(
+            onPressed: _navigateToUpload,
+            child: Text('home.upload'.tr()), // Texto traducido.
+          ),
+          // Botón para navegar a la pantalla de reproducción.
+          ElevatedButton(
+            onPressed: () => _navigateToPlayback('example.pdf'), // Archivo de ejemplo.
+            child: Text('home.playback'.tr()), // Texto traducido.
+          ),
         ],
       ),
-    );
-  }
-
-  // Construye la sección de bienvenida
-  Widget _buildWelcomeSection(double spacing) {
-    return Column(
-      children: [
-        AppLogo(size: 120.0), // Logo de la app
-        SizedBox(height: spacing),
-        Text(
-          'home.welcome'.tr(args: [_userName]),
-          style: Theme.of(context).textTheme.headline4,
-        ),
-        SizedBox(height: spacing / 2),
-        Text(
-          'home.what_to_do'.tr(),
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
-      ],
-    );
-  }
-
-  // Construye los botones de características principales
-  Widget _buildFeatureButtons(double spacing) {
-    return Column(
-      children: [
-        CustomButton(
-          onPressed: () {
-            AppNavigator.pushSlideRoute(
-              page: const UploadScreen(),
-              settings: RouteSettings(name: AppRoute.pdfUpload.path),
-            );
-          },
-          child: Text('home.upload_pdf'.tr()),
-        ),
-        SizedBox(height: spacing),
-        CustomButton(
-          onPressed: () {
-            AppNavigator.pushSlideRoute(
-              page: const TextToSpeechScreen(),
-              settings: RouteSettings(name: AppRoute.textToSpeech.path),
-            );
-          },
-          child: Text('home.text_to_speech'.tr()),
-        ),
-        SizedBox(height: spacing),
-        CustomButton(
-          onPressed: () {
-            AppNavigator.pushSlideRoute(
-              page: const AudioPlaybackScreen(),
-              settings: RouteSettings(name: AppRoute.playback.path),
-            );
-          },
-          child: Text('home.my_audio_files'.tr()),
-        ),
-      ],
     );
   }
 }
