@@ -1,16 +1,29 @@
 // lib/src/features/auth/login_screen.dart
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../core/providers/theme_provider.dart';
-import '../../core/auth/authentication_manager.dart';
-import '../../core/error/error_handler.dart';
-import '../../core/navigation/app_navigator.dart';
-import '../../core/navigation/app_route.dart';
-import '../../shared/layouts/login_screen_layout.dart';
-import '../../shared/widgets/language_selector.dart';
-import '../home/home_screen.dart';
-import '../../core/theme/theme_config.dart';
+// Imports básicos de Flutter y paquetes externos
+import 'package:flutter/material.dart'; // Proporciona los widgets básicos de Flutter
+import 'package:provider/provider.dart'; // Para el manejo de estado con Provider
+import 'package:easy_localization/easy_localization.dart'; // Para la internacionalización
+
+// Imports relacionados con la navegación
+import '../../core/navigation/app_navigator.dart'; // Para la navegación estandarizada
+import '../../core/navigation/app_route.dart'; // Contiene las rutas de la aplicación
+import '../../core/navigation/page_transition.dart'; // Para las transiciones de página personalizadas
+
+// Imports relacionados con la autenticación y manejo de errores
+import '../../core/auth/authentication_manager.dart'; // Maneja la autenticación
+import '../../core/error/error_handler.dart'; // Maneja los errores de autenticación
+
+// Imports relacionados con el tema
+import '../../core/providers/theme_provider.dart'; // Proveedor para el manejo del tema
+import '../../core/theme/theme_config.dart'; // Configuración del tema
+
+// Imports de widgets y layouts personalizados
+import '../../shared/layouts/login_screen_layout.dart'; // Layout personalizado para la pantalla de login
+import '../../shared/widgets/language_selector.dart'; // Selector de idioma
+import '../../shared/widgets/email_password_form.dart'; // Formulario de email y contraseña
+
+// Imports de otras pantallas (para tipado en la navegación)
+import '../home/home_screen.dart'; // Pantalla de inicio
 
 /// Estado de la pantalla de inicio de sesión.
 class _LoginScreenState extends State<LoginScreen> {
