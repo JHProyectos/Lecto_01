@@ -1,11 +1,25 @@
+// Widgets y funcionalidades básicas de Flutter
 import 'package:flutter/material.dart';
+
+// Localización
 import 'package:easy_localization/easy_localization.dart';
-import '../../shared/utils/pdf_processor.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/language_selector.dart';
-import '../../core/theme/theme_config.dart';
+
+// Navegación y rutas
 import '../../core/navigation/app_navigator.dart';
 import '../../core/navigation/app_route.dart';
+import '../../core/navigation/page_transition.dart';
+
+// Gestión de temas
+import '../../core/providers/theme_provider.dart';
+import '../../core/theme/theme_config.dart';
+
+// Utilidades y widgets personalizados
+import '../../shared/utils/file_processor.dart';
+import '../../shared/widgets/custom_button.dart';
+import '../../shared/widgets/language_selector.dart';
+
+// Otras pantallas (para navegación)
+import '../playback/playback_screen.dart';
 
 /// Pantalla que muestra el progreso del procesamiento de PDF a audio
 /// Estado de la pantalla de procesamiento (Processing).
