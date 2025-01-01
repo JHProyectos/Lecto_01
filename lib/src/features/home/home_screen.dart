@@ -1,19 +1,29 @@
 //lib/src/features/home/home_screen.dart:
+// Widgets y funcionalidades básicas de Flutter
 import 'package:flutter/material.dart';
+
+// Localización
 import 'package:easy_localization/easy_localization.dart';
-import '../../shared/layouts/orientation_layout.dart';
-import '../../shared/styles/orientation_styles.dart';
-import '../../core/auth/authentication_manager.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/app_logo.dart';
-import '../../shared/widgets/language_selector.dart';
+
+// Navegación y rutas
 import '../../core/navigation/app_navigator.dart';
 import '../../core/navigation/app_route.dart';
-import '../pdf_upload/upload_screen.dart';
-import '../text_to_speech/text_to_speech_screen.dart';
-import '../audio_playback/audio_playback_screen.dart';
-import '../login/login_screen.dart';
+import '../../core/navigation/page_transition.dart';
+
+// Autenticación
+import '../../core/auth/authentication_manager.dart';
+
+// Gestión de temas
+import '../../core/providers/theme_provider.dart';
 import '../../core/theme/theme_config.dart';
+
+// Widgets personalizados
+import '../../shared/widgets/custom_button.dart';
+import '../../shared/widgets/language_selector.dart';
+
+// Otras pantallas (para navegación)
+import '../upload/upload_screen.dart';
+import '../playback/playback_screen.dart';
 
 /// Estado de la pantalla principal (Home).
 class _HomeScreenState extends State<HomeScreen> {
