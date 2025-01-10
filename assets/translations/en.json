@@ -1,11 +1,15 @@
 {
-   "login": {
+  "login": {
     "title": "Login",
     "email": "Email",
     "password": "Password",
     "login_button": "Login",
-    "google_login": "Sign in with Google",
-    "language": "Language"
+    "google_login": "Login with Google",
+    "language": "Language",
+    "email_required": "Email is required",
+    "password_required": "Password is required",
+    "invalid_credentials": "Invalid credentials",
+    "register": "Register"
   },
   "home": {
     "title": "Home",
@@ -15,28 +19,67 @@
     "text_to_speech": "Text to Speech",
     "my_audio_files": "My Audio Files",
     "language": "Language",
-    "logout": "Logout"
-  }
+    "logout": "Logout",
+    "theme": "Theme"
+  },
   "upload": {
     "title": "Upload PDF",
     "drag_file_here": "Drag a PDF file here",
     "select_pdf": "Select PDF",
     "upload_pdf": "Upload PDF",
     "success_title": "Success",
-    "success_message": "The PDF file has been uploaded successfully."
+    "success_message": "The PDF file has been uploaded successfully.",
+    "error_title": "Error",
+    "error_message": "There was a problem uploading the PDF file.",
+    "file_size_limit": "Maximum file size is 10 MB",
+    "invalid_file_type": "Please select a valid PDF file"
   },
   "processing": {
     "title": "Processing PDF",
     "processing_file": "Processing: {0}",
     "progress_percentage": "{0}%",
-    "go_to_playback": "Go to playback"
+    "go_to_playback": "Go to playback",
+    "error_title": "Processing Error",
+    "error_message": "There was a problem processing the PDF file."
   },
   "playback": {
     "title": "Audio Playback",
     "file": "File: {0}",
-    "progress_percentage": "{0}%"
+    "progress_percentage": "{0}%",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "speed": "Speed",
+    "discard_changes_title": "Discard Changes",
+    "discard_changes_message": "Are you sure you want to discard unsaved changes?",
+    "premium_feature": "Premium Feature",
+    "premium_message": "This feature is available only for premium users."
   },
   "common": {
-    "ok": "OK"
+    "ok": "OK",
+    "cancel": "Cancel",
+    "discard": "Discard",
+    "save": "Save",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading...",
+    "retry": "Retry"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "account": "Account",
+    "premium": "Premium",
+    "upgrade": "Upgrade to Premium",
+    "logout": "Logout"
+  },
+  "errors": {
+    "general": "An error has occurred. Please try again.",
+    "network": "Connection error. Please check your internet connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "not_found": "The requested resource was not found."
   }
 }
